@@ -1,9 +1,17 @@
 import express from "express";
+import { ENV } from "./config/env.js";
+import { connectDB } from "./config/db.js";
 
 const app = express();
 
-const PORT = process.env.PORT || 5001;
+app.get("/", (req, res) => {
+  return res.json({
+    success: true,
+    message: "Hello Aryan how are you",
+  });
+});
 
-app.listen(PORT, () => {
-  console.log(`Server Listening on http://localhost:${PORT}`);
+app.listen(ENV.PORT, () => {
+  connectDB();
+  console.log(`Server Listening on http://localhost:${ENV.PORT}`);
 });
