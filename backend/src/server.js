@@ -11,7 +11,16 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(ENV.PORT, () => {
-  connectDB();
-  console.log(`Server Listening on http://localhost:${ENV.PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(ENV.PORT, () => {
+      console.log(`Server Listening on http://localhost:${ENV.PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
