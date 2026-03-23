@@ -42,9 +42,12 @@ app.use((err, req, res) => {
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(ENV.PORT, () => {
-      console.log(`Server Listening on http://localhost:${ENV.PORT}`);
-    });
+    // listen for local developement
+    if (ENV.NODE_ENV !== "production") {
+      app.listen(ENV.PORT, () => {
+        console.log(`Server Listening on http://localhost:${ENV.PORT}`);
+      });
+    }
   } catch (error) {
     console.error("Failed to start server", error.message);
     process.exit(1);
@@ -52,3 +55,6 @@ const startServer = async () => {
 };
 
 startServer();
+
+// export for vercel
+export default app;
